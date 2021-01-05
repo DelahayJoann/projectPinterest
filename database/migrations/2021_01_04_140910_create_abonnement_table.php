@@ -15,8 +15,8 @@ class CreateAbonnementTable extends Migration
     {
         Schema::create('abonnement', function (Blueprint $table) {
             $table->id();
-            $table->string('fk_profil');
-            $table->string('fk_profilsuivit');
+            $table->integer('fk_profil');
+            $table->integer('fk_profilsuivit');
             $table->timestamps();
         });
     }

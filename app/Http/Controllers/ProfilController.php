@@ -13,7 +13,8 @@ class ProfilController extends Controller
      */
     public function index()
     {
-        //
+        $profil = Profil::get();
+        return view('Profils.index',compact('profil'));
     }
 
     /**
@@ -23,7 +24,7 @@ class ProfilController extends Controller
      */
     public function create()
     {
-        //
+        return view('profils.create');
     }
 
     /**
@@ -34,7 +35,25 @@ class ProfilController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate(request(),[
+            'nom' => 'required|min:5|max:30',
+            'prenom' => 'required|min:5|max:30',
+            'pseudo' => 'required|min:5|max:30',
+            'urlAvatar' => 'required|min:5|max:30',
+            'urlCover' => 'min:5|max:30',
+            'email' => 'required|min:5|max:30',
+        ]);
+
+        Profil::create([
+            'nom' => $request['nom'],
+            'prenom' => $request['prenom'],
+            'pseudo' => $request['pseudo'],
+            'urlAvatar' => $request['urlAvatar'],
+            'urlCover' => $request['urlCover'],
+            'email' => $request['email'],
+        ]);
+
+        redirect('/profil');
     }
 
     /**
@@ -45,7 +64,8 @@ class ProfilController extends Controller
      */
     public function show($id)
     {
-        //
+        $profil = Profil::findOrFail($id);
+        return view('profils.show',compact('profil'));
     }
 
     /**
@@ -56,7 +76,9 @@ class ProfilController extends Controller
      */
     public function edit($id)
     {
-        //
+        $profil = Profil::findOrFail($id);
+
+        return view('profils.edit',compact('profil'));
     }
 
     /**
@@ -68,7 +90,18 @@ class ProfilController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate(request(),[
+            'nom' => 'required|min:5|max:30',
+            'prenom' => 'required|min:5|max:30',
+            'pseudo' => 'required|min:5|max:30',
+            'urlAvatar' => 'required|min:5|max:30',
+            'urlCover' => 'min:5|max:30',
+            'email' => 'required|min:5|max:30',
+        ]);
+
+        Profil::where("id", $id)->update($request->all());
+
+        redirect('/profil/show/'.$id);
     }
 
     /**
@@ -79,6 +112,7 @@ class ProfilController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Profil::where("id", $id)->delete();
+        redirect('/');
     }
 }
