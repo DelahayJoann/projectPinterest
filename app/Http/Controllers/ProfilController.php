@@ -49,7 +49,7 @@ class ProfilController extends Controller
         if ($request->hasFile('urlAvatar')) {
             if ($request->file('urlAvatar')->isValid()) {
                 $validated = $request->validate([
-                    'urlAvatar' => 'mimes:jpeg,png|max:1024',
+                    'urlAvatar' => 'dimensions:max_width=300,max_height=300|image|mimes:jpeg,png,jpg,gif,svg|max:1024',
                 ]);
                 $extension = $request->urlAvatar->extension();
                 $request->urlAvatar->storeAs('/images/avatars/', "test".".".$extension);
@@ -64,7 +64,7 @@ class ProfilController extends Controller
         if ($request->hasFile('urlCover')) {
             if ($request->file('urlCover')->isValid()) {
                 $validated = $request->validate([
-                    'urlCover' => 'mimes:jpeg,png|max:1024',
+                    'urlCover' => 'dimensions:max_width=900,max_height=480|image|mimes:jpeg,png,jpg,gif,svg|max:1024',
                 ]);
                 $extension = $request->urlCover->extension();
                 $request->urlCover->storeAs('/images/covers/', "test".".".$extension);
@@ -126,6 +126,8 @@ class ProfilController extends Controller
             'nom' => 'required|min:5|max:30',
             'prenom' => 'required|min:5|max:30',
             'pseudo' => 'required|min:5|max:30|unique:profil',
+            'urlAvatar' => 'dimensions:max_width=200,max_height=200|image|mimes:jpeg,png,jpg,gif,svg|max:1024',
+            'urlCover' => 'dimensions:max_width=900,max_height=480|image|mimes:jpeg,png,jpg,gif,svg|max:1024',
         ]);
 
         $avatar_path = Profil::get(['urlAvatar'])->where('id','=', $id);

@@ -17,7 +17,7 @@
     <title>@yield('title')</title>
   </head>
   <body>
-    @yield('nav')
+    @include('navbar')
     <h1 class="text-center mb-md-5 p-md-5">@yield('title')</h1>
     <div class="container-fluid">
         @yield('content')

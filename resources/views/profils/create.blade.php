@@ -38,16 +38,16 @@
             </div>
         </div>
         <div class="form-group row">
-            <label for="nom" class="col-md-12 col-form-label">Avatar (facultatif): </label>
+            <label for="nom" class="col-md-12 col-form-label">Avatar (facultatif) | dimenssion max: 300x300 | poids max: 1024ko: </label>
             <div class="col-md-12">
                 <input type="file" class="form-control" name="urlAvatar" id="urlAvatar" placeholder="" value="{{ old('urlAvatar') }}">
-                @if($errors->has('avatarUrl'))
+                @if($errors->has('urlAvatar'))
                     <small class="error">{{ $errors->first('urlAvatar') }}</small>
                 @endif
             </div>
         </div>
         <div class="form-group row">
-            <label for="nom" class="col-md-12 col-form-label">Profil cover (facultatif): </label>
+            <label for="nom" class="col-md-12 col-form-label">Profil cover (facultatif) | dimenssion max: 900x480 | poids max: 1024ko: </label>
             <div class="col-md-12">
                 <input type="file" class="form-control" name="urlCover" id="urlCover" placeholder="" value="{{ old('urlCover') }}">
                 @if($errors->has('urlCover'))
