@@ -9,5 +9,5 @@ class Profil extends Model
 {
     use HasFactory;
     protected $table = 'profil';
-    protected $fillable = ['nom', 'prenom', 'pseudo', 'urlAvatar', 'urlCover', 'email', 'password'];
+    protected $fillable = ['nom', 'prenom', 'pseudo', 'urlAvatar', 'urlCover', 'fk_user'];
 }

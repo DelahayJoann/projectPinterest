@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Profil;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File; 
 
 class ProfilController extends Controller
 {
@@ -38,22 +43,49 @@ class ProfilController extends Controller
         $this->validate(request(),[
             'nom' => 'required|min:5|max:30',
             'prenom' => 'required|min:5|max:30',
-            'pseudo' => 'required|min:5|max:30',
-            'urlAvatar' => 'required|min:5|max:30',
-            'urlCover' => 'min:5|max:30',
-            'email' => 'required|min:5|max:30',
+            'pseudo' => 'required|min:5|max:30|unique:profil',
         ]);
+
+        if ($request->hasFile('urlAvatar')) {
+            if ($request->file('urlAvatar')->isValid()) {
+                $validated = $request->validate([
+                    'urlAvatar' => 'mimes:jpeg,png|max:1024',
+                ]);
+                $extension = $request->urlAvatar->extension();
+                $request->urlAvatar->storeAs('/images/avatars/', "test".".".$extension);
+                $urlAvatar = "images/avatars/test".".".$extension;
+                Session::flash('success', "Success!");
+            }
+        }
+        else{
+            $urlAvatar = "images/avatars/default.jpg";
+        }
+
+        if ($request->hasFile('urlCover')) {
+            if ($request->file('urlCover')->isValid()) {
+                $validated = $request->validate([
+                    'urlCover' => 'mimes:jpeg,png|max:1024',
+                ]);
+                $extension = $request->urlCover->extension();
+                $request->urlCover->storeAs('/images/covers/', "test".".".$extension);
+                $urlCover = "images/covers/test".".".$extension;
+                Session::flash('success', "Success!");
+            }
+        }
+        else{
+            $urlCover = "images/covers/default.jpg";
+        }
 
         Profil::create([
             'nom' => $request['nom'],
             'prenom' => $request['prenom'],
             'pseudo' => $request['pseudo'],
-            'urlAvatar' => $request['urlAvatar'],
-            'urlCover' => $request['urlCover'],
-            'email' => $request['email'],
+            'urlAvatar' => $urlAvatar,
+            'urlCover' => $urlCover,
+            'fk_user' => 1, //temporary test
         ]);
 
-        redirect('/profil');
+        //redirect('/profils');
     }
 
     /**
@@ -93,15 +125,74 @@ class ProfilController extends Controller
         $this->validate(request(),[
             'nom' => 'required|min:5|max:30',
             'prenom' => 'required|min:5|max:30',
-            'pseudo' => 'required|min:5|max:30',
-            'urlAvatar' => 'required|min:5|max:30',
-            'urlCover' => 'min:5|max:30',
-            'email' => 'required|min:5|max:30',
+            'pseudo' => 'required|min:5|max:30|unique:profil',
         ]);
 
-        Profil::where("id", $id)->update($request->all());
+        $avatar_path = Profil::get(['urlAvatar'])->where('id','=', $id);
+        $cover_path = Profil::get(['urlCover'])->where('id','=', $id);
 
-        redirect('/profil/show/'.$id);
+        if($request['deleteAvatar'] && ($avatar_path != "images/avatars/default.jpg")){
+            if (File::exists($avatar_path)) {
+                File::delete($avatar_path);
+            }
+        }
+
+        if ($request->hasFile('urlAvatar')) {
+            if ($request->file('urlAvatar')->isValid()) {
+                $validated = $request->validate([
+                    'urlAvatar' => 'mimes:jpeg,png|max:1024',
+                ]);
+                $extension = $request->urlAvatar->extension();
+                $request->urlAvatar->storeAs('/images/avatars/', "test".".".$extension);
+                $urlAvatar = "images/avatars/test".".".$extension;
+                Session::flash('success', "Success!");
+            }
+        }
+        else{
+            if($request['deleteAvatar']){
+                $urlAvatar = "images/avatars/default.jpg";
+            }
+            else{
+                $urlAvatar = $avatar_path;
+            }
+        }
+
+        if($request['deleteCover'] && ($cover_path != "images/covers/default.jpg")){
+            if (File::exists($cover_path)) {
+                File::delete($cover_path);
+            }
+        }
+
+        if ($request->hasFile('urlCover')) {
+            if ($request->file('urlCover')->isValid()) {
+                $validated = $request->validate([
+                    'urlCover' => 'mimes:jpeg,png|max:1024',
+                ]);
+                $extension = $request->urlCover->extension();
+                $request->urlCover->storeAs('/images/covers/', "test".".".$extension);
+                $urlCover = "images/covers/test".".".$extension;
+                Session::flash('success', "Success!");
+            }
+        }
+        else{
+            if($request['deleteCover']){
+                $urlCover = "images/covers/default.jpg";
+            }
+            else{
+                $urlCover = $cover_path;
+            }
+        }
+
+        Profil::where("id", $id)->update([
+            'nom' => $request['nom'],
+            'prenom' => $request['prenom'],
+            'pseudo' => $request['pseudo'],
+            'urlAvatar' => $urlAvatar,
+            'urlCover' => $urlCover,
+            'fk_user' => 1, //temporary test
+        ]);
+
+        redirect('/profils/show/'.$id);
     }
 
     /**
