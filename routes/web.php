@@ -21,3 +21,5 @@ Route::get('/', function () {
 Route::get('/profils/create',[ProfilController::class,'create']);
 
 Route::post('/profils/create',[ProfilController::class,'store']);
+
+Route::get('/profils/show/{id}',[ProfilController::class,'show']);
