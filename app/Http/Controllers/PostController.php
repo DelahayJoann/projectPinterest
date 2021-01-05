@@ -23,7 +23,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        //retourne la vue pour ajouter un nouvel article
+        return view('posts.create');
     }
 
     /**
@@ -34,7 +35,21 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //validation du formulaire (les champs ci-dessous sont les champs du formulaire)
+        $request->validate([
+            'imgUrl'=>'required',
+            'title'=>'required|min:5',
+            'description'=>'required'
+        ]);
+
+        //insérer en db (les champs ci-dessous sont les champs de la db (à gauche de la flèche) puis ceux du formulaire (à droite de la flèche)
+        Post::create([
+            'imgUrl'=>$request['imgUrl'],
+            'title'=>$request['title'],
+            'description'=>$request['description']
+        ]);
+
+        return redirect('/post');
     }
 
     /**

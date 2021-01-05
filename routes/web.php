@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +17,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+//affiche le formulaire
+Route::get('/post/create',[PostController::class,'create']);
+//récupère les infos du post et les envoie dans la BDD
+Route::post('/post/create',[PostController::class,'store']);
+
+//GET UPDATE DELETE (pour les details d'un POST IMAGE)
