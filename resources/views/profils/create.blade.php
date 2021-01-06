@@ -20,7 +20,7 @@
             </div>
         </div>
         <div class="form-group row">
-            <label for="nom" class="col-md-12 col-form-label">Prenom: </label>
+            <label for="prenom" class="col-md-12 col-form-label">Prenom: </label>
             <div class="col-md-12">
                 <input type="text" class="form-control" name="prenom" id="prenom" placeholder="" value="{{ old('prenom') }}">
                 @if($errors->has('prenom'))
@@ -29,7 +29,7 @@
             </div>
         </div>
         <div class="form-group row">
-            <label for="nom" class="col-md-12 col-form-label">Pseudo: </label>
+            <label for="pseudo" class="col-md-12 col-form-label">Pseudo: </label>
             <div class="col-md-12">
                 <input type="text" class="form-control" name="pseudo" id="pseudo" placeholder="" value="{{ old('pseudo') }}">
                 @if($errors->has('pseudo'))
@@ -38,7 +38,7 @@
             </div>
         </div>
         <div class="form-group row">
-            <label for="nom" class="col-md-12 col-form-label">Avatar (facultatif) | dimenssion max: 300x300 | poids max: 1024ko: </label>
+            <label for="urlAvatar" class="col-md-12 col-form-label">Avatar (facultatif) | dimenssion max: 300x300 | poids max: 1024ko: </label>
             <div class="col-md-12">
                 <input type="file" class="form-control" name="urlAvatar" id="urlAvatar" placeholder="" value="{{ old('urlAvatar') }}">
                 @if($errors->has('urlAvatar'))
@@ -47,7 +47,7 @@
             </div>
         </div>
         <div class="form-group row">
-            <label for="nom" class="col-md-12 col-form-label">Profil cover (facultatif) | dimenssion max: 900x480 | poids max: 1024ko: </label>
+            <label for="urlCover" class="col-md-12 col-form-label">Profil cover (facultatif) | dimenssion max: 900x480 | poids max: 1024ko: </label>
             <div class="col-md-12">
                 <input type="file" class="form-control" name="urlCover" id="urlCover" placeholder="" value="{{ old('urlCover') }}">
                 @if($errors->has('urlCover'))

@@ -96,7 +96,12 @@ class ProfilController extends Controller
      */
     public function show($id)
     {
-        $profil = Profil::findOrFail($id);
+        if(is_numeric($id)){
+            $profil = Profil::findOrFail($id);
+        }
+        else{
+            $profil = Profil::where('pseudo', '=', $id)->firstOrFail();
+        }
         return view('profils.show',compact('profil'));
     }
 
@@ -106,7 +111,7 @@ class ProfilController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id) //abandonner le passage d'id lorsque login system actif
     {
         $profil = Profil::findOrFail($id);
 

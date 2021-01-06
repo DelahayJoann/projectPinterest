@@ -18,8 +18,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/profils/create',[ProfilController::class,'create']);
+Route::get('/profils/create',[ProfilController::class,'create'])->middleware(['auth']);
 
-Route::post('/profils/create',[ProfilController::class,'store']);
+Route::post('/profils/create',[ProfilController::class,'store'])->middleware(['auth']);
 
-Route::get('/profils/show/{id}',[ProfilController::class,'show']);
+Route::get('/profils/show/{id}',[ProfilController::class,'show'])->middleware(['auth']);
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+require __DIR__.'/auth.php';
