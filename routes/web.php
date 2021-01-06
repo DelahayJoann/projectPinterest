@@ -24,3 +24,13 @@ Route::get('/post/create',[PostController::class,'create']);
 Route::post('/post/create',[PostController::class,'store']);
 
 //GET UPDATE DELETE (pour les details d'un POST IMAGE)
+//affiche un post à la fois par l'id
+Route::get('/post/show/{id}', [PostController::class,'show']);
+
+//affiche le formulaire pour modifier un post
+Route::get('/post/edit/{id}', [PostController::class,'edit']);
+//envoie le post modifié dans la db
+Route::put('/post/edit/{id}', [PostController::class,'update']);
+
+//supprimer le post
+Route::delete('/post/delete/{id}', [PostController::class,'destroy']);
