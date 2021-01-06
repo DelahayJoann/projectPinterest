@@ -30,6 +30,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
+
 //affiche le formulaire
 Route::get('/post/create',[PostController::class,'create']);
 //récupère les infos du post et les envoie dans la BDD

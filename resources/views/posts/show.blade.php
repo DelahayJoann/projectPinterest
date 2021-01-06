@@ -7,7 +7,7 @@
 @endif
 
 @section('content')
-<img src="{{ $post['imgUrl'] }}" alt="">
+<img src="http://localhost:8000/{{ $post['imgUrl'] }}" alt="">
 <h2>{{ $post['title'] }}</h2>
 <p>{{  $post['description'] }}</p>
 
