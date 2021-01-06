@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Post;
 
 class PostController extends Controller
 {
@@ -23,7 +24,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        //retourne la vue pour ajouter un nouvel article
+        return view('posts.create');
     }
 
     /**
@@ -34,7 +36,31 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //validation du formulaire
+        $request->validate([
+            'title'=>'required|min:5',
+            'description'=>'required'
+        ]);
+
+        // if ($request->file('imgUrl')->isValid()) {
+            $validated = $request->validate([
+                'imgUrl' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3072',
+            ]);
+            $extension = $request->imgUrl->extension();
+            $request->imgUrl->storeAs('/images/posts/', "test".".".$extension);
+            $imgUrl = "images/posts/test".".".$extension;
+            Session::flash('success', "Success!");
+        // }
+
+        //insérer en db
+        Post::create([
+            'imgUrl'=>$imgUrl,
+            'title'=>$request['title'],
+            'description'=>$request['description'],
+            'fk_user'=>1
+        ]);
+
+        //return redirect('/post');
     }
 
     /**
@@ -45,7 +71,8 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        $post = Post::findOrFail($id);
+        return view('posts.show',compact('post'));
     }
 
     /**
@@ -56,7 +83,8 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = Post::findOrFail($id);
+        return view('posts.edit',compact('post'));
     }
 
     /**
@@ -66,9 +94,19 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post, $id)
     {
-        //
+        $request->validate([
+            'imgUrl'=>'required',
+            'title'=>'required|min:5',
+            'description'=>'required'
+        ]);
+        
+        $post = Post::findOrFail($id);
+
+        $post->update($request->all());
+
+        return redirect('/posts.show');
     }
 
     /**
@@ -77,8 +115,12 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post, $id)
     {
-        //
+        $post = Post::findOrFail($id);
+
+        $post->delete();
+
+        return redirect ('/posts');
     }
 }
