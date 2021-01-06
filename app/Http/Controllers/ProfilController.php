@@ -52,6 +52,7 @@ class ProfilController extends Controller
                     'urlAvatar' => 'dimensions:max_width=300,max_height=300|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
                 ]);
                 $urlAvatar=$request->urlAvatar->store('/images/avatars');
+                //$urlAvatar=Storage::putFile('/images/avatars', $request->file('urlAvatar'));
                 Session::flash('success', "Success!");
             }
         }
@@ -65,6 +66,7 @@ class ProfilController extends Controller
                     'urlCover' => 'dimensions:max_width=900,max_height=480|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
                 ]);
                 $urlCover=$request->urlCover->store('/images/covers');
+                //$urlCover=Storage::putFile('/images/covers', $request->file('urlCover'));
                 Session::flash('success', "Success!");
             }
         }
@@ -146,7 +148,7 @@ class ProfilController extends Controller
                     'urlAvatar' => 'mimes:jpeg,png|max:1024',
                 ]);
                 $extension = $request->urlAvatar->extension();
-                $request->urlAvatar->storeAs('/images/avatars/', "test".".".$extension);
+                $request->urlAvatar->store('/images/avatars/');
                 $urlAvatar = "images/avatars/test".".".$extension;
                 Session::flash('success', "Success!");
             }
