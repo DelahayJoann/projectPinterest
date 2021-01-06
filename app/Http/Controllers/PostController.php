@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use Illuminate\Support\Facades\File;
 
 class PostController extends Controller
 {
@@ -38,20 +39,15 @@ class PostController extends Controller
     {
         //validation du formulaire
         $request->validate([
+            'imgUrl' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048|required',
             'title'=>'required|min:5',
             'description'=>'required'
         ]);
 
-        // if ($request->file('imgUrl')->isValid()) {
-            $validated = $request->validate([
-                'imgUrl' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3072',
-            ]);
-            $extension = $request->imgUrl->extension();
-            $request->imgUrl->storeAs('/images/posts/', "test".".".$extension);
-            $imgUrl = "images/posts/test".".".$extension;
-            Session::flash('success', "Success!");
-        // }
-
+        if ($request->hasFile('imgUrl')) {
+            $imgUrl = $request->imgUrl->store('/images/posts');
+            //Session::flash('success', "Success!");
+        }
         //insérer en db
         Post::create([
             'imgUrl'=>$imgUrl,
@@ -94,19 +90,34 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post, $id)
+    public function update(Request $request, $id)
     {
         $request->validate([
-            'imgUrl'=>'required',
             'title'=>'required|min:5',
             'description'=>'required'
         ]);
+
+        if ($request->hasFile('imgUrl')) {
+            $imgUrl = $request->imgUrl->store('/images/posts');
+            $oldImgUrl = Post::get('imgUrl')->where('id', '=' , $id);
+            if (File::exists($oldImgUrl)) {
+                File::delete($oldImgUrl);
+            }
+            //Session::flash('success', "Success!");
+        }
+        else {
+            $imgUrl = Post::get('imgUrl')->where('id', '=' , $id);
+        }
         
         $post = Post::findOrFail($id);
 
-        $post->update($request->all());
+        $post->update([
+            'title' => $request['title'],
+            'description' => $request['description'],
+            'imgUrl' => $imgUrl,
+        ]);
 
-        return redirect('/posts.show');
+    return redirect('/post/edit/' . $id);
     }
 
     /**
