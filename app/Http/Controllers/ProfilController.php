@@ -49,10 +49,11 @@ class ProfilController extends Controller
         if ($request->hasFile('urlAvatar')) {
             if ($request->file('urlAvatar')->isValid()) {
                 $validated = $request->validate([
-                    'urlAvatar' => 'dimensions:max_width=300,max_height=300|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                    'urlAvatar' => 'dimensions:max_width=300,max_height=300|image|mimes:jpeg,png,jpg,gif,svg|max:1024',
                 ]);
-                $urlAvatar=$request->urlAvatar->store('images/avatars');
-                //$urlAvatar=Storage::putFile('/images/avatars', $request->file('urlAvatar'));
+                $extension = $request->urlAvatar->extension();
+                $request->urlAvatar->storeAs('/images/avatars/', "test".".".$extension);
+                $urlAvatar = "images/avatars/test".".".$extension;
                 Session::flash('success', "Success!");
             }
         }
@@ -63,10 +64,11 @@ class ProfilController extends Controller
         if ($request->hasFile('urlCover')) {
             if ($request->file('urlCover')->isValid()) {
                 $validated = $request->validate([
-                    'urlCover' => 'dimensions:max_width=900,max_height=480|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                    'urlCover' => 'dimensions:max_width=900,max_height=480|image|mimes:jpeg,png,jpg,gif,svg|max:1024',
                 ]);
-                $urlCover=$request->urlCover->store('images/covers');
-                //$urlCover=Storage::putFile('/images/covers', $request->file('urlCover'));
+                $extension = $request->urlCover->extension();
+                $request->urlCover->storeAs('/images/covers/', "test".".".$extension);
+                $urlCover = "images/covers/test".".".$extension;
                 Session::flash('success', "Success!");
             }
         }
@@ -148,7 +150,7 @@ class ProfilController extends Controller
                     'urlAvatar' => 'mimes:jpeg,png|max:1024',
                 ]);
                 $extension = $request->urlAvatar->extension();
-                $request->urlAvatar->store('/images/avatars/');
+                $request->urlAvatar->storeAs('/images/avatars/', "test".".".$extension);
                 $urlAvatar = "images/avatars/test".".".$extension;
                 Session::flash('success', "Success!");
             }
@@ -174,7 +176,7 @@ class ProfilController extends Controller
                     'urlCover' => 'mimes:jpeg,png|max:1024',
                 ]);
                 $extension = $request->urlCover->extension();
-                $request->urlCover->store('/images/covers/');
+                $request->urlCover->storeAs('/images/covers/', "test".".".$extension);
                 $urlCover = "images/covers/test".".".$extension;
                 Session::flash('success', "Success!");
             }
