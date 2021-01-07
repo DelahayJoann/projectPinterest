@@ -1,0 +1,60 @@
+#modal {
+    #login {
+        color: white;
+        transition: all 1s ease-in-out;
+        margin-left: 5px;
+    }
+    #login:hover {
+        color: #1c1c1c;
+        border: white solid 1px;
+        background: white;
+    }
+    .modal-content {
+        background: #1c1c1c;
+        h4 {
+            color: white;
+        }
+    }
+    .connect {
+        color: white;
+    }
+    #closemodal {
+        border: red solid 1px;
+        padding: 5px;
+        color: red;
+        transition: all 1s ease-in-out;
+    }
+    #closemodal:hover {
+        background-color: red;
+        color: white;
+    }
+
+    #btn-register {
+        color: white;
+        margin-left: 5px;
+        transition: all 1s ease-in-out;
+    }
+
+    #btn-register:hover {
+        color: #1c1c1c;
+        border: white solid 1px;
+        background: white;
+    }
+
+    #register {
+        border: green solid 1px;
+        padding: 5px;
+        color: green;
+        transition: all 1s ease-in-out;
+    }
+    #register:hover {
+        background-color: green;
+        color: white;
+    }
+}
+.tiles {
+    img {
+        max-width: 25rem;
+        margin-top: 5px;
+    }
+}
