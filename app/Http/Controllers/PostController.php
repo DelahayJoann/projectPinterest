@@ -117,7 +117,7 @@ class PostController extends Controller
             'imgUrl' => $imgUrl,
         ]);
 
-    return redirect('/post/edit/' . $id);
+        return redirect('/post/edit/' . $id);
     }
 
     /**
