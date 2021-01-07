@@ -1,7 +1,11 @@
 /node_modules
 /public/hot
+<<<<<<< HEAD
+=======
+/public/storage
+/public/images
+>>>>>>> 4d4e4abc73a002d955f35379d4eea01b920dcb91
 /storage/*.key
-/vendor
 .env
 .env.backup
 .phpunit.result.cache
