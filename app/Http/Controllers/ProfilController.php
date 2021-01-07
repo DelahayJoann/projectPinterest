@@ -51,7 +51,7 @@ class ProfilController extends Controller
                 $validated = $request->validate([
                     'urlAvatar' => 'dimensions:max_width=300,max_height=300|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
                 ]);
-                $urlAvatar=$request->urlAvatar->store('/images/avatars');
+                $urlAvatar=$request->urlAvatar->store('images/avatars');
                 //$urlAvatar=Storage::putFile('/images/avatars', $request->file('urlAvatar'));
                 Session::flash('success', "Success!");
             }
@@ -65,7 +65,7 @@ class ProfilController extends Controller
                 $validated = $request->validate([
                     'urlCover' => 'dimensions:max_width=900,max_height=480|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
                 ]);
-                $urlCover=$request->urlCover->store('/images/covers');
+                $urlCover=$request->urlCover->store('images/covers');
                 //$urlCover=Storage::putFile('/images/covers', $request->file('urlCover'));
                 Session::flash('success', "Success!");
             }
