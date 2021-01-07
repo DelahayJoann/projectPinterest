@@ -150,8 +150,7 @@ class ProfilController extends Controller
                     'urlAvatar' => 'mimes:jpeg,png|max:1024',
                 ]);
                 $extension = $request->urlAvatar->extension();
-                $request->urlAvatar->storeAs('/images/avatars/', "test".".".$extension);
-                $urlAvatar = "images/avatars/test".".".$extension;
+                $urlAvatar = $request->urlAvatar->store('/images/avatars/');
                 Session::flash('success', "Success!");
             }
         }
@@ -176,8 +175,7 @@ class ProfilController extends Controller
                     'urlCover' => 'mimes:jpeg,png|max:1024',
                 ]);
                 $extension = $request->urlCover->extension();
-                $request->urlCover->storeAs('/images/covers/', "test".".".$extension);
-                $urlCover = "images/covers/test".".".$extension;
+                $urlCover = $request->urlAvatar->store('/images/covers/');
                 Session::flash('success', "Success!");
             }
         }

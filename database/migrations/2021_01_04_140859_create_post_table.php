@@ -18,7 +18,7 @@ class CreatePostTable extends Migration
             $table->string('imgUrl');
             $table->string('title');
             $table->string('description');
-            $table->integer('fk_profil');
+            $table->integer('fk_user');
             $table->timestamps();
         });
     }

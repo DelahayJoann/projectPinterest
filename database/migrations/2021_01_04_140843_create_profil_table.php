@@ -20,7 +20,6 @@ class CreateProfilTable extends Migration
             $table->string('pseudo');
             $table->string('urlAvatar');
             $table->string('urlCover');
-            $table->string('email');
             $table->integer('fk_user');
             $table->timestamps();
         });
