@@ -8,6 +8,7 @@
 
 @section('content')
 <div class="container">
+    <img src="http://localhost:8000/{{ $post['imgUrl'] }}" alt="">
     <form action="/post/edit/{{ $post['id'] }}" method="POST" enctype="multipart/form-data">
     {{ csrf_field() }}
     {{ method_field('PATCH') }}
