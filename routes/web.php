@@ -19,11 +19,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/profils/create',[ProfilController::class,'create'])->middleware(['auth']);
+Route::get('/profils/create',[ProfilController::class,'create']);//->middleware(['auth']);
 
-Route::post('/profils/create',[ProfilController::class,'store'])->middleware(['auth']);
+Route::post('/profils/create',[ProfilController::class,'store']);//->middleware(['auth']);
 
-Route::get('/profils/show/{id}',[ProfilController::class,'show'])->middleware(['auth']);
+Route::get('/profils/show/{id}',[ProfilController::class,'show']);//->middleware(['auth']);
+
+Route::get('/profils/edit/{id}',[ProfilController::class,'edit']);//->middleware(['auth']);
+
+Route::patch('/profils/edit/{id}', [ProfilController::class,'update']);//->middleware(['auth']);
+
+Route::get('/profils/destroy/{id}', [ProfilController::class,'destroy']);//->middleware(['auth']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');

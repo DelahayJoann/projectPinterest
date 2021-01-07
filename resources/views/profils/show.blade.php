@@ -12,5 +12,5 @@
         <p>Avatar: {{ Html::image($profil->urlAvatar) }}</p>
         <p>Cover: {{ Html::image($profil->urlCover) }}</p>
         <p><a href="/profils/edit/{{ $profil->id }}" class="btn btn-primary">Edit</a></p>
-        <p><form action="/profils/destroy/{{ $profil->id }}" method="POST"> {{ method_field('DELETE') }} {{ csrf_field()}}<button type="submit" class="btn btn-primary">Delete</button></form></p>
+        <p><a href="/profils/destroy/{{ $profil->id }}" class="btn btn-primary">Supprimer</a></p>
 @endsection

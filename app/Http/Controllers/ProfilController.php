@@ -83,7 +83,7 @@ class ProfilController extends Controller
             'fk_user' => 1, //temporary test
         ]);
 
-        //redirect('/profils');
+        return redirect('/profils/show/'.DB::getPdo()->lastInsertId());
     }
 
     /**
@@ -128,41 +128,31 @@ class ProfilController extends Controller
         $this->validate(request(),[
             'nom' => 'required|min:5|max:30',
             'prenom' => 'required|min:5|max:30',
-            'pseudo' => 'required|min:5|max:30|unique:profil',
         ]);
 
-        $avatar_path = Profil::get(['urlAvatar'])->where('id','=', $id);
-        $cover_path = Profil::get(['urlCover'])->where('id','=', $id);
+        $current = Profil::findOrFail($id);
 
-        if($request['deleteAvatar'] && ($avatar_path != "images/avatars/default.jpg")){
-            if (File::exists($avatar_path)) {
-                File::delete($avatar_path);
-            }
+
+        if($current->pseudo != $request->pseudo){
+            $validated = $request->validate([
+                'pseudo' => 'required|min:5|max:30|unique:profil',
+            ]);
         }
 
         if ($request->hasFile('urlAvatar')) {
             if ($request->file('urlAvatar')->isValid()) {
                 $validated = $request->validate([
-                    'urlAvatar' => 'dimensions:max_width=200,max_height=200|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                    'urlAvatar' => 'dimensions:max_width=300,max_height=300|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
                 ]);
-                $extension = $request->urlAvatar->extension();
-                $urlAvatar = $request->urlAvatar->store('/images/avatars/');
+                $urlAvatar = $request->urlAvatar->store('/images/avatars');
+                if (File::exists($current->urlAvatar) && $current->urlAvatar != "images/avatars/default.jpg") {
+                    File::delete($current->urlAvatar);
+                }
                 Session::flash('success', "Success!");
             }
         }
         else{
-            if($request['deleteAvatar']){
-                $urlAvatar = "images/avatars/default.jpg";
-            }
-            else{
-                $urlAvatar = $avatar_path;
-            }
-        }
-
-        if($request['deleteCover'] && ($cover_path != "images/covers/default.jpg")){
-            if (File::exists($cover_path)) {
-                File::delete($cover_path);
-            }
+                $urlAvatar = $current->urlAvatar;
         }
 
         if ($request->hasFile('urlCover')) {
@@ -170,18 +160,15 @@ class ProfilController extends Controller
                 $validated = $request->validate([
                     'urlCover' => 'dimensions:max_width=900,max_height=480|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
                 ]);
-                $extension = $request->urlCover->extension();
-                $urlCover = $request->urlAvatar->store('/images/covers/');
+                $urlCover = $request->urlCover->store('/images/covers');
+                if (File::exists($current->urlCover) && $current->urlCover != "images/covers/default.jpg") {
+                    File::delete($current->urlCover);
+                }
                 Session::flash('success', "Success!");
             }
         }
         else{
-            if($request['deleteCover']){
-                $urlCover = "images/covers/default.jpg";
-            }
-            else{
-                $urlCover = $cover_path;
-            }
+                $urlCover = $current->urlCover;
         }
 
         Profil::where("id", $id)->update([
@@ -190,10 +177,9 @@ class ProfilController extends Controller
             'pseudo' => $request['pseudo'],
             'urlAvatar' => $urlAvatar,
             'urlCover' => $urlCover,
-            'fk_user' => 1, //temporary test
         ]);
 
-        redirect('/profils/show/'.$id);
+        return redirect('/profils/show/'.$id);
     }
 
     /**
@@ -205,6 +191,6 @@ class ProfilController extends Controller
     public function destroy($id)
     {
         Profil::where("id", $id)->delete();
-        redirect('/');
+        return redirect('/');
     }
 }
