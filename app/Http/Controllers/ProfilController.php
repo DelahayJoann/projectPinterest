@@ -16,10 +16,10 @@ class ProfilController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function all()
+    public function index()
     {
         $profils = Profil::get();
-        return view('Profils.all',compact('profils'));
+        return view('profils.index',compact('profils'));
     }
 
     /**
