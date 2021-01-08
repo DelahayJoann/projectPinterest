@@ -1,0 +1,26 @@
+#register {
+    max-width: 25rem;
+    box-shadow: white;
+    margin-top: 10rem;
+    background-color: #343a40 !important;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: rgba(75, 74, 74, 0.25) 0px 54px 55px,
+        rgba(75, 74, 74, 0.25) 0px -12px 30px,
+        rgba(75, 74, 74, 0.25) 0px 4px 6px, rgba(75, 74, 74, 0.25) 0px 12px 13px,
+        rgba(75, 74, 74, 0.25) 0px -3px 5px;
+    .form-group {
+        color: white;
+    }
+    #joins {
+        border: green solid 1px;
+        padding: 5px;
+        color: green;
+        transition: all 1s ease-in-out;
+        margin-left: 115px;
+    }
+    #joins:hover {
+        background-color: green;
+        color: white;
+    }
+}

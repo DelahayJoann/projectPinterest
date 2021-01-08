@@ -1,3 +1,13 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+body {
+  background-color: #1c1c1c;
+  font-family: "Roboto", sans-serif;
+}
+
+#logo {
+  height: 50px;
+}
+
 #modal #login {
   color: white;
   -webkit-transition: all 1s ease-in-out;
@@ -49,7 +59,7 @@
   background: white;
 }
 
-#modal #register {
+#modal #register-modal {
   border: green solid 1px;
   padding: 5px;
   color: green;
@@ -57,12 +67,66 @@
   transition: all 1s ease-in-out;
 }
 
-#modal #register:hover {
+#modal #register-modal:hover {
   background-color: green;
   color: white;
 }
 
 .tiles img {
   max-width: 25rem;
-  margin-top: 5px;
+  -webkit-transition: all 1s ease-in-out;
+  transition: all 1s ease-in-out;
+}
+
+.tiles img:hover {
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
+}
+
+.tiles .row {
+  margin: 0;
+}
+
+.tiles .row .card {
+  margin-left: 5px;
+  margin-bottom: 15px;
+  margin-top: 25px;
+}
+
+.tiles .row .card .card-body {
+  background-color: #1c1c1c;
+}
+
+.tiles .row .card .card-body .card-text {
+  color: white;
+}
+
+#register {
+  max-width: 25rem;
+  -webkit-box-shadow: white;
+          box-shadow: white;
+  margin-top: 10rem;
+  background-color: #343a40 !important;
+  padding: 2rem;
+  border-radius: 10px;
+  -webkit-box-shadow: rgba(75, 74, 74, 0.25) 0px 54px 55px, rgba(75, 74, 74, 0.25) 0px -12px 30px, rgba(75, 74, 74, 0.25) 0px 4px 6px, rgba(75, 74, 74, 0.25) 0px 12px 13px, rgba(75, 74, 74, 0.25) 0px -3px 5px;
+          box-shadow: rgba(75, 74, 74, 0.25) 0px 54px 55px, rgba(75, 74, 74, 0.25) 0px -12px 30px, rgba(75, 74, 74, 0.25) 0px 4px 6px, rgba(75, 74, 74, 0.25) 0px 12px 13px, rgba(75, 74, 74, 0.25) 0px -3px 5px;
+}
+
+#register .form-group {
+  color: white;
+}
+
+#register #joins {
+  border: green solid 1px;
+  padding: 5px;
+  color: green;
+  -webkit-transition: all 1s ease-in-out;
+  transition: all 1s ease-in-out;
+  margin-left: 115px;
+}
+
+#register #joins:hover {
+  background-color: green;
+  color: white;
 }
