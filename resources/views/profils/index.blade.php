@@ -25,8 +25,8 @@
             <td>{{ $profil->nom }}</td>
             <td>{{ $profil->prenom }}</td>
             <td>{{ $profil->pseudo }}</td>
-            <td>{{ Html::image($profil->urlAvatar,"Avatar",[],true) }}</td>
-            <td>{{ Html::image($profil->urlCover,"Cover",[],true) }}</td>
+            <td>{{ Html::image(secure_asset($profil->urlAvatar)) }}</td>
+            <td>{{ Html::image(secure_asset($profil->urlCover)) }}</td>
         </tr>
     @endforeach
     </tbody>
