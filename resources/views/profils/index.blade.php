@@ -7,6 +7,7 @@
 @endif
 
 @section('content')
+<a href="/profils/create/">Créer</a>
 <table class="table">
     <thead>
         <tr>
@@ -14,8 +15,7 @@
             <th>Nom</th>
             <th>Prenom</th>
             <th>Pseudo</th>
-            <th>Avatar</th>
-            <th>Cover</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>  
@@ -25,8 +25,11 @@
             <td>{{ $profil->nom }}</td>
             <td>{{ $profil->prenom }}</td>
             <td>{{ $profil->pseudo }}</td>
-            <td>{{ Html::image($profil->urlAvatar) }}</td>
-            <td>{{ Html::image($profil->urlCover) }}</td>
+            <td>
+                <a href="/profils/show/{{ $profil->id }}">afficher</a><br/>
+                <a href="/profils/edit/{{ $profil->id }}">modifier</a><br/>
+                <a href="/profils/destroy/{{ $profil->id }}">supprimer</a>
+            </td>
         </tr>
     @endforeach
     </tbody>
