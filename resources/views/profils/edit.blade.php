@@ -1,4 +1,4 @@
-@extends('layouts.post')
+@extends('layouts.profil')
 
 @if (isset($title))
     @section('title', $title)

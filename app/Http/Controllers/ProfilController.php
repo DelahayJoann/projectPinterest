@@ -190,7 +190,15 @@ class ProfilController extends Controller
      */
     public function destroy($id)
     {
-        Profil::where("id", $id)->delete();
+        $profil = Profil::findOrFail($id);
+
+        if (File::exists($profil->urlAvatar) && $profil->urlAvatar != "images/avatars/default.jpg") {
+            File::delete($profil->urlAvatar);
+        }
+        if (File::exists($profil->urlCover) && $profil->urlCover != "images/covers/default.jpg") {
+            File::delete($profil->urlCover);
+        }
+        $profil->delete();
         return redirect('/');
     }
 }
