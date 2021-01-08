@@ -8,7 +8,7 @@
 
 @section('content')
 <div class="container">
-    <img src="http://localhost:8000/{{ $post['imgUrl'] }}" alt="">
+    {{ Html::image($post->imgUrl) }}
     <form action="/post/edit/{{ $post['id'] }}" method="POST" enctype="multipart/form-data">
     {{ csrf_field() }}
     {{ method_field('PATCH') }}
@@ -40,7 +40,6 @@
             </div>
         </div>
 
-       
         <div class="form-group row">
             <div class="offset-sm-2 col-sm-10">
                 <button type="submit" class="btn btn-primary">Enregistrer</button>

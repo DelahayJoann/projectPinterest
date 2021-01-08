@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use Illuminate\Support\Facades\File;
+use App\Models\Profil;
 
 class PostController extends Controller
 {
@@ -15,7 +16,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts=Post::get();
+        return view('posts.index', compact('posts'));
     }
 
     /**
@@ -49,14 +51,14 @@ class PostController extends Controller
             //Session::flash('success', "Success!");
         }
         //insérer en db
-        Post::create([
+        $lastId = Post::create([
             'imgUrl'=>$imgUrl,
             'title'=>$request['title'],
             'description'=>$request['description'],
             'fk_user'=>1
         ]);
 
-        //return redirect('/post');
+        return redirect('/post/show/'.$lastId->id);
     }
 
     /**
@@ -68,7 +70,12 @@ class PostController extends Controller
     public function show($id)
     {
         $post = Post::findOrFail($id);
-        return view('posts.show',compact('post'));
+
+        $user = Profil::join('users', 'users.id', '=', 'profil.fk_user')
+            ->where('users.id', '=', $post['fk_user'])
+            ->get(['profil.pseudo']);
+
+        return view('posts.show',compact('post', 'user'));
     }
 
     /**
@@ -117,7 +124,7 @@ class PostController extends Controller
             'imgUrl' => $imgUrl,
         ]);
 
-    return redirect('/post/edit/' . $id);
+        return redirect('/post/edit/' . $id);
     }
 
     /**
@@ -126,12 +133,12 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post, $id)
+    public function destroy($id)
     {
         $post = Post::findOrFail($id);
 
         $post->delete();
 
-        return redirect ('/posts');
+        return redirect ('/');
     }
 }

@@ -7,18 +7,20 @@
 @endif
 
 @section('content')
-<img src="http://localhost:8000/{{ $post['imgUrl'] }}" alt="">
-<h2>{{ $post['title'] }}</h2>
-<p>{{  $post['description'] }}</p>
-
-<a href="/post/edit/{{ $post['id'] }}" class="btn btn-warning">éditer</a>
-
-<form method="POST" action="/post/delete/{{ $post['id'] }}">
-{{ csrf_field() }}
-{{ method_field('DELETE') }}
-    <div class="form-group">
-        <input type="submit" value="Supprimer" class="btn btn-danger">
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h2>{{ $post['title'] }}</h2>
+            <div>{{ Html::image($post->imgUrl) }}</div>
+            <p>Description de l'image:</p>
+            <p>{{  $post['description'] }}</p>
+            <p>Auteur du post:</p>
+            <p>{{  $user[0]['pseudo'] }}</p>
+        </div>
     </div>
-</form>
-
+    <div class="row">
+        <a href="/post/edit/{{ $post['id'] }}" class="btn btn-primary">Éditer</a>
+        <a href="/post/delete/{{ $post['id'] }}" class="btn btn-primary">Supprimer</a>
+    </div>
+</div>
 @endsection
