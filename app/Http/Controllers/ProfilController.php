@@ -19,7 +19,7 @@ class ProfilController extends Controller
     public function index()
     {
         $profils = Profil::get();
-        return view('Profils.index',compact('profils'));
+        return view('Profils.all',compact('profils'));
     }
 
     /**
