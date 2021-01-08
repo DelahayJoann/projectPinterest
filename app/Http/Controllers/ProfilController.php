@@ -74,7 +74,7 @@ class ProfilController extends Controller
             $urlCover = "images/covers/default.jpg";
         }
 
-        Profil::create([
+        $lastId = Profil::create([
             'nom' => $request['nom'],
             'prenom' => $request['prenom'],
             'pseudo' => $request['pseudo'],
@@ -83,7 +83,7 @@ class ProfilController extends Controller
             'fk_user' => 1, //temporary test
         ]);
 
-        return redirect('/profils/show/'.DB::getPdo()->lastInsertId());
+        return redirect('/profils/show/'.$lastId->id);
     }
 
     /**
