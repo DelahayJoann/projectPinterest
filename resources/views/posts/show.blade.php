@@ -14,17 +14,13 @@
             <div>{{ Html::image($post->imgUrl) }}</div>
             <p>Description de l'image:</p>
             <p>{{  $post['description'] }}</p>
+            <p>Auteur du post:</p>
+            <p>{{  $user[0]['pseudo'] }}</p>
         </div>
     </div>
     <div class="row">
-        <a href="/post/edit/{{ $post['id'] }}" class="btn btn-warning">Éditer</a>
-        <form method="POST" action="/post/delete/{{ $post['id'] }}">
-        {{ csrf_field() }}
-        {{ method_field('DELETE') }}
-            <div class="form-group">
-                <input type="submit" value="Supprimer" class="btn btn-danger">
-            </div>
-        </form>
+        <a href="/post/edit/{{ $post['id'] }}" class="btn btn-primary">Éditer</a>
+        <a href="/post/delete/{{ $post['id'] }}" class="btn btn-primary">Supprimer</a>
     </div>
 </div>
 @endsection

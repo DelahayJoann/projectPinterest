@@ -45,4 +45,7 @@ Route::get('/post/edit/{id}', [PostController::class,'edit']);
 Route::patch('/post/edit/{id}', [PostController::class,'update']);
 
 //supprimer le post
-Route::delete('/post/delete/{id}', [PostController::class,'destroy']);
+Route::get('/post/delete/{id}', [PostController::class,'destroy']);
+
+//afficher les posts d'un user
+Route::get('/posts', [PostController::class,'index']);
