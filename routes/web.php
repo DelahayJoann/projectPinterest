@@ -31,6 +31,8 @@ Route::patch('/profils/edit/{id}', [ProfilController::class,'update']);//->middl
 
 Route::get('/profils/destroy/{id}', [ProfilController::class,'destroy']);//->middleware(['auth']);
 
+Route::get('/profils', [ProfilController::class,'index']);//->middleware(['auth']);
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
